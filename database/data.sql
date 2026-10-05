@@ -199,10 +199,25 @@ INSERT INTO public.vendor_bill OVERRIDING SYSTEM VALUE VALUES (3, 4, '2026-10-09
 INSERT INTO public.vendor_payment OVERRIDING SYSTEM VALUE VALUES (3, 1, 1);
 INSERT INTO public.vendor_payment OVERRIDING SYSTEM VALUE VALUES (4, 2, 2);
 
+--
+-- Data for Name: users; Type: TABLE DATA; Schema: public;
+--
 
+INSERT INTO public.users OVERRIDING SYSTEM VALUE VALUES (1, 'Urban Furniture Admin', 'admin@urbanfurniture.com', 'dummy_admin_hash', 'admin');
+INSERT INTO public.users OVERRIDING SYSTEM VALUE VALUES (2, 'Accounts Manager', 'accountant@urbanfurniture.com', 'dummy_accountant_hash', 'accountant');
 --
 -- Name: analytic_account_account_id_seq; Type: SEQUENCE SET; Schema: public;  
 --
+--
+-- Data for Name: contact_users; Type: TABLE DATA; Schema: public;
+--
+
+INSERT INTO public.contact_users OVERRIDING SYSTEM VALUE VALUES (1, 100000, 'dummy_abc_hash');
+INSERT INTO public.contact_users OVERRIDING SYSTEM VALUE VALUES (2, 100001, 'dummy_def_hash');
+INSERT INTO public.contact_users OVERRIDING SYSTEM VALUE VALUES (3, 100002, 'dummy_customer1_hash');
+INSERT INTO public.contact_users OVERRIDING SYSTEM VALUE VALUES (4, 100003, 'dummy_customer2_hash');
+INSERT INTO public.contact_users OVERRIDING SYSTEM VALUE VALUES (5, 100004, 'dummy_both1_hash');
+INSERT INTO public.contact_users OVERRIDING SYSTEM VALUE VALUES (6, 100005, 'dummy_both2_hash');
 
 SELECT pg_catalog.setval('public.analytic_account_account_id_seq', 7, true);
 

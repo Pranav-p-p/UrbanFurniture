@@ -348,7 +348,7 @@ ALTER TABLE public.product ALTER COLUMN product_id ADD GENERATED ALWAYS AS IDENT
 
 CREATE TABLE public.purchase_order (
     purchase_order_id bigint NOT NULL,
-    vendor_id bigint
+    vendor_id bigint NOT NULL
 );
 
 
@@ -403,7 +403,7 @@ ALTER TABLE public.purchase_order ALTER COLUMN purchase_order_id ADD GENERATED A
 
 CREATE TABLE public.sales_order (
     sales_order_id bigint NOT NULL,
-    customer_id bigint
+    customer_id bigint NOT NULL
 );
 
 
@@ -811,6 +811,105 @@ ALTER TABLE ONLY public.vendor_payment
 ALTER TABLE ONLY public.vendor_payment
     ADD CONSTRAINT vendor_payment_fk_vendor_bill_id_fkey FOREIGN KEY (fk_vendor_bill_id) REFERENCES public.vendor_bill(vendor_bill_id);
 
+
+--
+-- Name: contact_users; Type: TABLE; Schema: public;  
+--
+
+CREATE TABLE public.contact_users (
+    contact_user_id bigint NOT NULL,
+    fk_contact_id bigint NOT NULL,
+    password character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public.contact_users OWNER TO postgres;
+
+--
+-- Name: contact_users_contact_user_id_seq; Type: SEQUENCE; Schema: public;  
+--
+
+ALTER TABLE public.contact_users ALTER COLUMN contact_user_id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.contact_users_contact_user_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: users; Type: TABLE; Schema: public;  
+--
+
+CREATE TABLE public.users (
+    user_id bigint NOT NULL,
+    email character varying(100) NOT NULL,
+    name character varying(100) NOT NULL,
+    password character varying(100) NOT NULL,
+    role character varying(20) NOT NULL,
+    CONSTRAINT users_role_check CHECK (((role)::text = ANY ((ARRAY['accountant'::character varying, 'admin'::character varying])::text[])))
+);
+
+
+ALTER TABLE public.users OWNER TO postgres;
+
+--
+-- Name: users_user_id_seq; Type: SEQUENCE; Schema: public;  
+--
+
+ALTER TABLE public.users ALTER COLUMN user_id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.users_user_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: contact_users contact_users_pkey; Type: CONSTRAINT; Schema: public;  
+--
+
+ALTER TABLE ONLY public.contact_users
+    ADD CONSTRAINT contact_users_pkey PRIMARY KEY (contact_user_id);
+
+
+--
+-- Name: contact_users unique_fk_contact_id; Type: CONSTRAINT; Schema: public;  
+--
+
+ALTER TABLE ONLY public.contact_users
+    ADD CONSTRAINT unique_fk_contact_id UNIQUE (fk_contact_id);
+
+
+--
+-- Name: users users_email_key; Type: CONSTRAINT; Schema: public;  
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_email_key UNIQUE (email);
+
+
+--
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public;  
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (user_id);
+
+
+--
+-- Name: contact_users contact_users_fk_contact_id_fkey; Type: FK CONSTRAINT; Schema: public;  
+--
+
+ALTER TABLE ONLY public.contact_users
+    ADD CONSTRAINT contact_users_fk_contact_id_fkey FOREIGN KEY (fk_contact_id) REFERENCES public.contact(contact_id);
+
+
+--
 
 --
 -- PostgreSQL database dump complete
